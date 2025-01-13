@@ -1,2 +1,4 @@
 #!/usr/bin/python3
-print("".join("{:c}".format(c) for c in range(97, 123) if c != 101 and c != 113))
+for letter in range(97, 123):
+    if chr(letter) != 'q' and chr(letter) != 'e':
+       print("{}".format(chr(letter)), end="")

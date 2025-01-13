@@ -1,2 +1,3 @@
 #!/usr/bin/python3
-print("".join("{:c}".format(c) for c in range(97, 123)))
+for letter in range(97, 123):
+    print("{}".format(chr(letter)), end="")
