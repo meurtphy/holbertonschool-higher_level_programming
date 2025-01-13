@@ -1,2 +1,4 @@
 #!/usr/bin/python3
-print("".join("{:c}".format(i) for i in range(97, 123) if i != 101 and i != 113))
+for letter in range(97, 123):
+    if letter != 101 and letter != 113:
+        print("{:c}".format(letter), end="")
