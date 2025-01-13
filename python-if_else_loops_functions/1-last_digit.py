@@ -2,7 +2,7 @@
 import random
 number = random.randint(-10000, 10000)
 str = "Last digit of"
-last_digit = abs(number) % 10  # Utilisation explicite de abs()
+last_digit = abs(number) % 10
 if number < 0:
     last_digit = -last_digit
 if last_digit > 5:
