@@ -48,7 +48,7 @@ class TestMaxInteger(unittest.TestCase):
 
     def test_none(self):
         with self.assertRaises(TypeError):
-            max_integer(Non)
+            max_integer(None)
 
 
 if __name__ == "__main__":
