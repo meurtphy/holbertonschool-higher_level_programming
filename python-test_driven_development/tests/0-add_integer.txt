@@ -1,3 +1,5 @@
+mkdir -p ./tests/
+cat > ./tests/0-add_integer.txt << 'EOF'
 >>> add_integer(1, 2)
 3
 >>> add_integer(100, -2)
@@ -14,3 +16,4 @@ TypeError: b must be an integer
 Traceback (most recent call last):
     ...
 TypeError: a must be an integer
+EOF
