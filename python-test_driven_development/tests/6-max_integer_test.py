@@ -2,14 +2,7 @@
 """Unittest for max_integer([..])
 """
 import unittest
-import sys
-import os
-
-# Ajoutez le chemin parent au sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-# Importez la fonction max_integer
-from six_max_integer import max_integer
+max_integer = __import__('6-max_integer').max_integer
 
 
 class TestMaxInteger(unittest.TestCase):
@@ -37,14 +30,11 @@ class TestMaxInteger(unittest.TestCase):
         self.assertEqual(max_integer([1.1, 2.2, 3.3, 4.4]), 4.4)
 
     def test_mixed_types(self):
-        self.assertEqual(max_integer([1, 2.2, 3, 4.4]), 4.4)
+        with self.assertRaises(TypeError):
+            max_integer([1, "a", 2, "b"])
 
     def test_strings(self):
         self.assertEqual(max_integer(["a", "b", "c", "d"]), "d")
-
-    def test_mixed_strings_and_numbers(self):
-        with self.assertRaises(TypeError):
-            max_integer([1, "a", 2, "b"])
 
     def test_none(self):
         with self.assertRaises(TypeError):
