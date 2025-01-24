@@ -1,19 +1,12 @@
->>> text_indentation = __import__('5-text_indentation').text_indentation
-
->>> text_indentation("Hello. World? Yes:")
-Hello.
-
-World?
-
-Yes:
->>> text_indentation("")
->>> text_indentation("No special chars here")
-No special chars here
->>> text_indentation(123)
+ >>> text_indentation = __import__('5-text_indentation').text_indentation
+>>> text_indentation("some text.")
+some text.
+<BLANKLINE>
+>>> text_indentation(5)
 Traceback (most recent call last):
     ...
 TypeError: text must be a string
->>> text_indentation("Trailing spaces after.  And here? ")
-Trailing spaces after.
-
-And here?
+>>> text_indentation()
+Traceback (most recent call last):
+    ...
+TypeError: text_indentation() missing 1 required positional argument: 'text'
