@@ -5,7 +5,7 @@
 class Square:
     """A class that defines a square."""
 
-    def __init__(self, size = 0):
+    def __init__(self, size=0):
         """
         Initialize the square with a private size attribute.
         Validate that size is an integer and >= 0.
