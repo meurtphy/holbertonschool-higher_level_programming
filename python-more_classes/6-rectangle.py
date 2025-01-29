@@ -1,21 +1,24 @@
 #!/usr/bin/python3
 """Module that defines a Rectangle class with area, perimeter,
-and string representation methods"""
+string representation methods, and instance tracking."""
 
 
 class Rectangle:
     """Represents a rectangle with width and height."""
+
+    number_of_instances = 0  # Public class attribute
 
     def __init__(self, width=0, height=0):
         """
         Initialize the Rectangle instance.
 
         Args:
-            width (int): The width of the rectangle sides.
-            height (int): The height of the rectangle sides.
+            width (int): The width of the rectangle sides. Defaults to 0.
+            height (int): The height of the rectangle sides. Defaults to 0.
         """
         self.width = width
         self.height = height
+        Rectangle.number_of_instances += 1  # Increment on new instance
 
     @property
     def width(self):
@@ -86,7 +89,7 @@ class Rectangle:
 
     def __str__(self):
         """
-        Return the string representation
+        Return the string representation of the rectangle using the `#` character.
 
         Returns:
             str: The rectangle represented by `#` characters, or an empty
@@ -109,4 +112,14 @@ class Rectangle:
         Returns:
             str: A string representation of the Rectangle instance.
         """
-        return "Rectangle({}, {})".format(self.__width, self.__height)
+        return "Rectangle({}, {})".format(self.width, self.height)
+
+    def __del__(self):
+        """
+        Destructor for the Rectangle instance.
+
+        Prints a message when an instance is about to be destroyed and
+        decrements the instance counter.
+        """
+        print("Bye rectangle...")
+        Rectangle.number_of_instances -= 1  # Decrement on instance deletion
