@@ -86,7 +86,7 @@ class Rectangle:
 
     def __str__(self):
         """
-        Return the string.
+        Return the string representation of the rectangle using the `#` character.
 
         Returns:
             str: The rectangle represented by `#` characters, or an empty
@@ -101,7 +101,7 @@ class Rectangle:
         return "\n".join(rectangle_rows)
 
     def __repr__(self):
-         """
+        """
         Return the official string representation of the Rectangle.
 
         This representation can be used with eval() to recreate the object.
@@ -109,4 +109,4 @@ class Rectangle:
         Returns:
             str: A string representation of the Rectangle instance.
         """
-         return "Rectangle({}, {})".format(self.width, self.height)
+        return "Rectangle({}, {})".format(self.width, self.height)
