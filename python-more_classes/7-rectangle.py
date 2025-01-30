@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Defines a Rectangle with width, height, and print_symbol."""
 
+
 class Rectangle:
     """Rectangle with width and height."""
     number_of_instances = 0
