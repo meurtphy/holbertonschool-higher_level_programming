@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """
-Module that writes an object to a text
+Module that writes an object to a text file using JSON representation.
 """
 
-
 import json
+
 
 def load_from_json_file(filename):
     """
