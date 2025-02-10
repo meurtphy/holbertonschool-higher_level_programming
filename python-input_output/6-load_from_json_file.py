@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Module that writes an object to a text file using JSON representation.
+Module that writes an object to a text
 """
 
 
