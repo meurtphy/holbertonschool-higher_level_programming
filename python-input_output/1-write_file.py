@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+coucou1
+"""
 
 
 def write_file(filename="", text=""):
