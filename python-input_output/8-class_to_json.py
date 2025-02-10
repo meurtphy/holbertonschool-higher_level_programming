@@ -5,7 +5,6 @@ Module that returns the dictionary description for JSON serialization of an obje
 
 def class_to_json(obj):
     """
-    Returns the dictionary description with simple data structure
-    (list, dictionary, string, integer, and boolean) for JSON serialization of an object.
+    Returns the dictionary description with simple
     """
     return obj.__dict__
