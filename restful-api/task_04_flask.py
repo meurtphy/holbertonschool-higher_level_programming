@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Dictionnaire pour stocker les utilisateurs
+# Dictionnaire vide pour stocker les utilisateurs
 users = {}
 
 ### ✅ Route principale "/"
@@ -18,7 +18,7 @@ def status():
 ### ✅ Endpoint "/data" qui retourne la liste des usernames
 @app.route("/data")
 def get_users():
-    return jsonify(list(users.keys()))  # Ex: ["jane", "john"]
+    return jsonify(list(users.keys()))  # Ex: ["alice", "bob"]
 
 ### ✅ Endpoint "/users/<username>" pour récupérer un utilisateur spécifique
 @app.route("/users/<username>")
@@ -37,10 +37,21 @@ def add_user():
         return jsonify({"error": "Username is required"}), 400  # Code 400 si l'username est absent
 
     username = data["username"]
-    username[username] = data
+
+    # Vérifier si l'utilisateur existe déjà
+    if username in users:
+        return jsonify({"error": "User already exists"}), 400
+
+    # Ajouter l'utilisateur dans le dictionnaire
+    users[username] = {
+        "username": username,
+        "name": data.get("name", ""),
+        "age": data.get("age", ""),
+        "city": data.get("city", "")
+    }
 
     return jsonify({"message": "User added", "user": users[username]}), 201  # Code 201 pour création réussie
 
 # Lancer l'application Flask
 if __name__ == "__main__":
-    app.run
+    app.run(debug=True)  # `debug=True` permet le rechargement automatique du serveur
