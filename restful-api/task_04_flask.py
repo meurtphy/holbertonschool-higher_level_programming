@@ -37,21 +37,10 @@ def add_user():
         return jsonify({"error": "Username is required"}), 400  # Code 400 si l'username est absent
 
     username = data["username"]
-
-    # Vérifier si l'utilisateur existe déjà
-    if username in users:
-        return jsonify({"error": "User already exists"}), 400
-
-    # Ajouter l'utilisateur dans le dictionnaire
-    users[username] = {
-        "username": username,
-        "name": data.get("name", ""),
-        "age": data.get("age", ""),
-        "city": data.get("city", "")
-    }
+    username[username] = data
 
     return jsonify({"message": "User added", "user": users[username]}), 201  # Code 201 pour création réussie
 
 # Lancer l'application Flask
 if __name__ == "__main__":
-    app.run(debug=True)  # `debug=True` permet le rechargement automatique du serveur
+    app.run
