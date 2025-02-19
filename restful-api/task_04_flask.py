@@ -33,13 +33,14 @@ def add_user():
     data = request.get_json()  # Récupérer les données JSON envoyées
 
     # Vérifier si l'username est fourni
-    if "username" not in data:
+    if not data or "username" not in data:
         return jsonify({"error": "Username is required"}), 400  # Code 400 si l'username est absent
 
-    username = data["username"].lower()  # Normaliser les noms d'utilisateurs en minuscule
+    username = data["username"].strip().lower()  # Normaliser les noms d'utilisateurs en minuscule et enlever les espaces
 
-    # Vérifier si l'utilisateur existe déjà
+    # Vérifier si l'utilisateur existe déjà (en minuscule)
     if username in users:
+        print(f"Debug: Tentative d'ajout d'un utilisateur déjà existant ({username})")  # LOG pour le debug
         return jsonify({"error": "User already exists"}), 400  # Code 400 si le user existe déjà
 
     # Ajouter l'utilisateur dans le dictionnaire
