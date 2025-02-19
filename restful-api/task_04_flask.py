@@ -38,9 +38,20 @@ def add_user():
 
     username = data["username"]
 
-    # Vérifier si l'utilisateur existe déjà
+    # 🚨 **Correction : Vérifier si l'utilisateur existe déjà**
     if username in users:
-        return jsonify({"error": "User already exists"}), 400
+        return jsonify({"error": "User already exists"}), 400  # Code 400 pour doublon
+
+    # Ajouter l'utilisateur dans le dictionnaire
+    users[username] = {
+        "username": username,
+        "name": data.get("name", ""),
+        "age": data.get("age", ""),
+        "city": data.get("city", "")
+    }
+
+    return jsonify({"message": "User added", "user": users[username]}), 201  # Code 201 pour création réussie
+
 
     # Ajouter l'utilisateur dans le dictionnaire
     users[username] = {
