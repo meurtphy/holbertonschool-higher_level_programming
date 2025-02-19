@@ -1,0 +1,60 @@
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+# Dictionnaire pour stocker les utilisateurs
+users = {
+    "jane": {"username": "jane", "name": "Jane", "age": 28, "city": "Los Angeles"},
+    "john": {"username": "john", "name": "John", "age": 30, "city": "New York"}
+}
+
+### ✅ Route principale "/"
+@app.route("/")
+def home():
+    return "Welcome to the Flask API!"
+
+### ✅ Endpoint "/status" qui retourne "OK"
+@app.route("/status")
+def status():
+    return "OK"
+
+### ✅ Endpoint "/data" qui retourne la liste des usernames
+@app.route("/data")
+def get_users():
+    return jsonify(list(users.keys()))  # Ex: ["jane", "john"]
+
+### ✅ Endpoint "/users/<username>" pour récupérer un utilisateur spécifique
+@app.route("/users/<username>")
+def get_user(username):
+    if username in users:
+        return jsonify(users[username])
+    return jsonify({"error": "User not found"}), 404  # Code 404 si l'utilisateur n'existe pas
+
+### ✅ Endpoint "/add_user" pour ajouter un utilisateur via une requête POST
+@app.route("/add_user", methods=["POST"])
+def add_user():
+    data = request.get_json()  # Récupérer les données JSON envoyées
+
+    # Vérifier si l'username est fourni
+    if "username" not in data:
+        return jsonify({"error": "Username is required"}), 400  # Code 400 si l'username est absent
+
+    username = data["username"]
+
+    # Vérifier si l'utilisateur existe déjà
+    if username in users:
+        return jsonify({"error": "User already exists"}), 400
+
+    # Ajouter l'utilisateur dans le dictionnaire
+    users[username] = {
+        "username": username,
+        "name": data.get("name", ""),
+        "age": data.get("age", ""),
+        "city": data.get("city", "")
+    }
+
+    return jsonify({"message": "User added", "user": users[username]}), 201  # Code 201 pour création réussie
+
+# Lancer l'application Flask
+if __name__ == "__main__":
+    app.run(debug=True)  # `debug=True` permet le rechargement automatique du serveur

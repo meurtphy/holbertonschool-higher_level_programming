@@ -10,7 +10,7 @@ class Square:
         Initialize the square with a private size attribute.
         Use the property setter to validate and set size.
         """
-        self.size = size  # This calls the size setter for validation.
+        self.size = size
 
     @property
     def size(self):
@@ -36,7 +36,7 @@ class Square:
     def my_print(self):
         """Print the square using the character '#'."""
         if self.__size == 0:
-            print("")  # Print an empty line if size is 0.
+            print("")
         else:
             for _ in range(self.__size):
                 print("#" * self.__size)
