@@ -36,11 +36,11 @@ def add_user():
     if "username" not in data:
         return jsonify({"error": "Username is required"}), 400  # Code 400 si l'username est absent
 
-    username = data["username"]
+    username = data["username"].lower()  # Normaliser les noms d'utilisateurs en minuscule
 
-    # 🚨 **Correction : Vérifier si l'utilisateur existe déjà**
+    # Vérifier si l'utilisateur existe déjà
     if username in users:
-        return jsonify({"error": "User already exists"}), 400  # Code 400 pour doublon
+        return jsonify({"error": "User already exists"}), 400  # Code 400 si le user existe déjà
 
     # Ajouter l'utilisateur dans le dictionnaire
     users[username] = {
