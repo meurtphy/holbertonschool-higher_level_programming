@@ -1,58 +1,31 @@
 from flask import Flask, jsonify, request
-
 app = Flask(__name__)
-
-# Dictionnaire vide pour stocker les utilisateurs
 users = {}
-
-### ✅ Route principale "/"
 @app.route("/")
 def home():
     return "Welcome to the Flask API!"
-
-### ✅ Endpoint "/status" qui retourne "OK"
+@app.route("/data")
+def data():
+    return jsonify(list(users.keys()))
 @app.route("/status")
 def status():
     return "OK"
-
-### ✅ Endpoint "/data" qui retourne la liste des usernames
-@app.route("/data")
-def get_users():
-    return jsonify(list(users.keys()))  # Ex: ["alice", "bob"]
-
-### ✅ Endpoint "/users/<username>" pour récupérer un utilisateur spécifique
 @app.route("/users/<username>")
 def get_user(username):
-    if username in users:
-        return jsonify(users[username])
-    return jsonify({"error": "User not found"}), 404  # Code 404 si l'utilisateur n'existe pas
-
-### ✅ Endpoint "/add_user" pour ajouter un utilisateur via une requête POST
+    user = users.get(username)
+    if user:
+        return jsonify(user)
+    return jsonify({"error": "User not found"}), 404
 @app.route("/add_user", methods=["POST"])
 def add_user():
-    data = request.get_json()  # Récupérer les données JSON envoyées
-
-    # Vérifier si l'username est fourni
-    if not data or "username" not in data:
-        return jsonify({"error": "Username is required"}), 400  # Code 400 si l'username est absent
-
-    username = data["username"].strip().lower()  # Normaliser les noms d'utilisateurs en minuscule et enlever les espaces
-
-    # Vérifier si l'utilisateur existe déjà (en minuscule)
-    if username in users:
-        print(f"Debug: Tentative d'ajout d'un utilisateur déjà existant ({username})")  # LOG pour le debug
-        return jsonify({"error": "User already exists"}), 400  # Code 400 si le user existe déjà
-
-    # Ajouter l'utilisateur dans le dictionnaire
-    users[username] = {
-        "username": username,
-        "name": data.get("name", ""),
-        "age": data.get("age", ""),
-        "city": data.get("city", "")
-    }
-
-    return jsonify({"message": "User added", "user": users[username]}), 201  # Code 201 pour création réussie
-
-# Lancer l'application Flask
+    user_data = request.json
+    if not user_data or "username" not in user_data:
+        return jsonify({"error": "Username is required"}), 400
+    username = user_data["username"]
+    users[username] = user_data
+    return jsonify({
+        "message": "User added",
+        "user": users[username]
+    }), 201
 if __name__ == "__main__":
-    app.run(debug=True)  # `debug=True` permet le rechargement automatique du serveur
+    app.run()
