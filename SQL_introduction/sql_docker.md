@@ -1,47 +1,52 @@
-Projet SQL – Holberton School – SQL_introduction
-Ce projet a pour but de manipuler des bases de données MySQL en utilisant des scripts SQL. Tous les scripts sont testés dans un environnement Docker sur un serveur MySQL (version 8.0).
-Les fichiers SQL sont organisés dans le répertoire SQL_introduction et chaque fichier correspond à un exercice spécifique.
+Projet SQL - Introduction à MySQL
+Ce projet a pour objectif de vous familiariser avec la manipulation de bases de données MySQL à l'aide de scripts SQL. Chaque script correspond à un exercice spécifique, et le tout est exécuté dans un conteneur Docker afin de garantir un environnement propre et isolé.
 
-Table des matières
-0. List databases
-1. Create a database
-2. Delete a database
-3. List tables
-4. First table
-5. Full description
-6. List all in table
-7. First add
-8. Count 89
-9. Full creation
-10. List by best
-11. Select the best
-12. Cheating is bad
-13. Score too low
-14. Average
-15. Number by score
-16. Say my name
-Prérequis
+Note : Tous les scripts sont testés sur MySQL 8.0 dans un conteneur Docker nommé mysql_project avec le mot de passe root.
+
+Table des Matières
+Prérequis et Installation
+Exercices
+0. Liste des bases de données
+1. Création d'une base de données
+2. Suppression d'une base de données
+3. Liste des tables
+4. Création de la table first_table
+5. Description complète de first_table
+6. Liste de toutes les lignes de first_table
+7. Insertion dans first_table
+8. Compter les enregistrements avec id = 89
+9. Création complète de second_table
+10. Liste des enregistrements par score décroissant
+11. Sélection des enregistrements avec score >= 10
+12. Mise à jour du score de Bob
+13. Suppression des enregistrements avec score <= 5
+14. Moyenne des scores
+15. Nombre d'enregistrements par score
+16. Liste des enregistrements avec nom non vide
+Commandes d'Exécution Générales
+Conclusion
+Prérequis et Installation
 Docker doit être installé sur votre machine.
-Un conteneur MySQL (version 8.0) est utilisé pour exécuter les scripts.
-Les commandes d'exécution se font à partir du terminal.
-Démarrer le conteneur MySQL
-Pour lancer le conteneur, utilisez la commande suivante :
+
+Pour lancer le conteneur MySQL, exécutez la commande suivante dans votre terminal :
 
 bash
 Copier
-docker run --name mysql_project -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=mydatabase -p 3306:3306 -d mysql:8.0
-Pour se connecter à MySQL dans le conteneur :
+docker run --name mysql_project \
+    -e MYSQL_ROOT_PASSWORD=root \
+    -e MYSQL_DATABASE=mydatabase \
+    -p 3306:3306 \
+    -d mysql:8.0
+Pour vous connecter à MySQL dans le conteneur :
 
 bash
 Copier
 docker exec -it mysql_project mysql -uroot -p
-(Le mot de passe est root.)
+Entrez le mot de passe root quand il est demandé.
 
-Exercice 0 – List databases
+Exercices
+0. Liste des bases de données
 Fichier : 0-list_databases.sql
-
-But : Afficher la liste de toutes les bases de données du serveur.
-
 Contenu :
 
 sql
@@ -52,12 +57,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' < 0-list_databases.sql
-Exercice 1 – Create a database
+1. Création d'une base de données
 Fichier : 1-create_database_if_missing.sql
-
-But : Créer la base de données hbtn_0c_0 si elle n'existe pas.
-Remarque : Vous n'êtes pas autorisé à utiliser SELECT ou SHOW.
-
 Contenu :
 
 sql
@@ -69,12 +70,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' < 1-create_database_if_missing.sql
-Exercice 2 – Delete a database
+2. Suppression d'une base de données
 Fichier : 2-remove_database.sql
-
-But : Supprimer la base de données hbtn_0c_0 si elle existe.
-Remarque : Vous n'êtes pas autorisé à utiliser SELECT ou SHOW.
-
 Contenu :
 
 sql
@@ -86,12 +83,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' < 2-remove_database.sql
-Exercice 3 – List tables
+3. Liste des tables
 Fichier : 3-list_tables.sql
-
-But : Lister toutes les tables d'une base de données donnée.
-Le nom de la base est passé en argument.
-
 Contenu :
 
 sql
@@ -102,15 +95,8 @@ Exécution (exemple avec la base mysql) :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' mysql < 3-list_tables.sql
-Exercice 4 – First table
+4. Création de la table first_table
 Fichier : 4-first_table.sql
-
-But : Créer une table appelée first_table dans la base hbtn_0c_0.
-Description :
-
-id de type INT
-name de type VARCHAR(256)
-Si la table existe déjà, le script ne doit pas échouer.
 Contenu :
 
 sql
@@ -125,12 +111,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 4-first_table.sql
-Exercice 5 – Full description
+5. Description complète de first_table
 Fichier : 5-full_table.sql
-
-But : Afficher la description complète de la table first_table (structure de création).
-Remarque : Vous n'êtes pas autorisé à utiliser DESCRIBE ou EXPLAIN.
-
 Contenu :
 
 sql
@@ -141,12 +123,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 5-full_table.sql
-Exercice 6 – List all in table
+6. Liste de toutes les lignes de first_table
 Fichier : 6-list_values.sql
-
-But : Lister toutes les lignes de la table first_table dans la base hbtn_0c_0.
-Tous les champs doivent être affichés.
-
 Contenu :
 
 sql
@@ -157,13 +135,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 6-list_values.sql
-Exercice 7 – First add
+7. Insertion dans first_table
 Fichier : 7-insert_value.sql
-
-But : Insérer une nouvelle ligne dans la table first_table avec les valeurs suivantes :
-
-id = 89
-name = "Best School"
 Contenu :
 
 sql
@@ -175,12 +148,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 7-insert_value.sql
-Exercice 8 – Count 89
+8. Compter les enregistrements avec id = 89
 Fichier : 8-count_89.sql
-
-But : Afficher le nombre d'enregistrements avec id = 89 dans la table first_table.
-La colonne résultante doit s'appeler average n'est pas demandée ici, mais l'exercice veut juste compter les occurrences.
-
 Contenu :
 
 sql
@@ -191,22 +160,10 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 8-count_89.sql
-(Pour afficher uniquement le résultat final, vous pouvez utiliser | tail -1 après la commande.)
+Pour n'afficher que le résultat final, vous pouvez rediriger la sortie via tail -1.
 
-Exercice 9 – Full creation
+9. Création complète de second_table
 Fichier : 9-full_creation.sql
-
-But : Créer une table second_table dans la base hbtn_0c_0 et y insérer plusieurs lignes.
-Description de la table :
-
-id INT
-name VARCHAR(256)
-score INT
-Enregistrements à insérer :
-(1, 'John', 10)
-(2, 'Alex', 3)
-(3, 'Bob', 14)
-(4, 'George', 8)
 Contenu :
 
 sql
@@ -229,11 +186,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 9-full_creation.sql
-Exercice 10 – List by best
+10. Liste des enregistrements par score décroissant
 Fichier : 10-top_score.sql
-
-But : Lister tous les enregistrements de la table second_table en affichant le score et le nom (dans cet ordre), triés par score décroissant.
-
 Contenu :
 
 sql
@@ -244,11 +198,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 10-top_score.sql
-Exercice 11 – Select the best
+11. Sélection des enregistrements avec score >= 10
 Fichier : 11-best_score.sql
-
-But : Lister tous les enregistrements de la table second_table ayant un score >= 10, affichant le score et le nom, triés par score décroissant.
-
 Contenu :
 
 sql
@@ -259,12 +210,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 11-best_score.sql
-Exercice 12 – Cheating is bad
+12. Mise à jour du score de Bob
 Fichier : 12-no_cheating.sql
-
-But : Mettre à jour le score de Bob à 10 dans la table second_table.
-Remarque : On ne doit utiliser que le champ name pour identifier Bob.
-
 Contenu :
 
 sql
@@ -275,11 +222,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 12-no_cheating.sql
-Exercice 13 – Score too low
+13. Suppression des enregistrements avec score <= 5
 Fichier : 13-change_class.sql
-
-But : Supprimer tous les enregistrements de second_table ayant un score <= 5.
-
 Contenu :
 
 sql
@@ -290,12 +234,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 13-change_class.sql
-Exercice 14 – Average
+14. Moyenne des scores
 Fichier : 14-average.sql
-
-But : Calculer la moyenne des scores de tous les enregistrements de la table second_table.
-La colonne résultat doit s'appeler average.
-
 Contenu :
 
 sql
@@ -306,13 +246,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 14-average.sql
-Exercice 15 – Number by score
+15. Nombre d'enregistrements par score
 Fichier : 15-groups.sql
-
-But : Lister le nombre d'enregistrements pour chaque score dans la table second_table.
-Le résultat doit afficher le score et le nombre d'enregistrements sous l'étiquette number.
-Les résultats doivent être triés par le nombre d'enregistrements en ordre décroissant.
-
 Contenu :
 
 sql
@@ -326,12 +261,8 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 15-groups.sql
-Exercice 16 – Say my name
+16. Liste des enregistrements avec nom non vide
 Fichier : 16-no_link.sql
-
-But : Lister tous les enregistrements de la table second_table dont le champ name n'est pas vide.
-Les résultats doivent afficher le score et le nom (dans cet ordre) et être triés par score décroissant.
-
 Contenu :
 
 sql
@@ -345,22 +276,24 @@ Exécution :
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 16-no_link.sql
-Commandes d'exécution générales
-Pour exécuter un script SQL sur le conteneur, utilisez la commande :
+Commandes d'Exécution Générales
+Pour exécuter un script SQL dans le conteneur, utilisez la commande suivante (remplacez [nom_du_fichier].sql et [nom_de_la_base] selon le cas) :
 
 bash
 Copier
 docker exec -i mysql_project mysql -uroot -p'root' [nom_de_la_base] < [nom_du_fichier].sql
-Exemple pour la base hbtn_0c_0 :
-
-bash
-Copier
-docker exec -i mysql_project mysql -uroot -p'root' hbtn_0c_0 < 9-full_creation.sql
-Pour vérifier les modifications ou la structure, vous pouvez vous connecter en mode interactif :
+Pour une session interactive MySQL :
 
 bash
 Copier
 docker exec -it mysql_project mysql -uroot -p
 Conclusion
-Ce README récapitule l'ensemble des commandes SQL demandées pour ce projet. Chaque fichier a un rôle précis, de la création et suppression de bases de données à la manipulation de tables et données.
-Ce projet vous permet de vous familiariser avec les commandes SQL essentielles et leur exécution dans un environnement Docker isolé.
+Ce projet vous permet de :
+
+Créer et supprimer des bases de données
+Créer et manipuler des tables (insertion, sélection, mise à jour, suppression)
+Utiliser des fonctions SQL telles que AVG, COUNT et des clauses de regroupement
+Exécuter des scripts SQL dans un environnement Docker isolé
+Chaque fichier SQL remplit un objectif spécifique et vous aide à comprendre les concepts de base de la manipulation de bases de données avec MySQL.
+
+N'hésitez pas à consulter ce README pour revoir les commandes et la logique utilisée dans chacun des exercices.
