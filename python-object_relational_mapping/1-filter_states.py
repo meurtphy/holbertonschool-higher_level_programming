@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Script"""
 import MySQLdb
 import sys
 
