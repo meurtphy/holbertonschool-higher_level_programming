@@ -7,20 +7,21 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    # Connexion MySQL avec 127.0.0.1 pour éviter les erreurs de socket
+    # Connexion avec 127.0.0.1 pour éviter les erreurs de socket
     engine = create_engine(
         'mysql+mysqldb://{}:{}@127.0.0.1:3306/{}'.format(
             sys.argv[1],
             sys.argv[2],
             sys.argv[3]
         ),
-        pool_pre_ping=True  # Évite les erreurs de connexion
+        pool_pre_ping=True
     )
 
+    # Création de la session
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Query sécurisé pour éviter les erreurs (on enlève les espaces parasites)
+    # Recherche de l'état par nom
     state_name = sys.argv[4].strip()
     state = session.query(State).filter(State.name == state_name).first()
 
