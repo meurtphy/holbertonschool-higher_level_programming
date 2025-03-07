@@ -2,31 +2,29 @@
 """Prints the State object with the name passed as argument"""
 
 import sys
-from model_state import Base, State
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from model_state import Base, State  # Import obligatoire
 
 if __name__ == "__main__":
-    # Création de l'engine avec 127.0.0.1 au lieu de localhost
+    # Création de l'engine (127.0.0.1
     engine = create_engine(
         "mysql+mysqldb://{}:{}@127.0.0.1:3306/{}".format(
             sys.argv[1], sys.argv[2], sys.argv[3]
         ),
-        pool_pre_ping=True  # Vérification de la connexion avant exécution
+        pool_pre_ping=True
     )
 
     # Création de la session
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Récupération de l'état avec un filtre SQL Injection Safe
-    state = session.query(State).filter(State.name == sys.argv[4]).first()
+    # Récupération de l'état avec un filtre sécurisé (évite SQL Injection)
+    state_name = sys.argv[4]
+    state = session.query(State).filter(State.name == state_name).first()
 
-    # Affichage du résultat exactement comme demandé
-    if state:
-        print(state.id)
-    else:
-        print("Not found")
+    # Affichage du résultat (format strict)
+    print(state.id if state else "Not found")
 
     # Fermeture propre de la session
     session.close()
