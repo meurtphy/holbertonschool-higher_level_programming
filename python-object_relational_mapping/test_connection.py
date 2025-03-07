@@ -2,19 +2,18 @@
 import sys
 from sqlalchemy import create_engine
 
-# Configuration de connexion
-username = sys.argv[1]
-password = sys.argv[2]
-database = sys.argv[3]
+username = "root"
+password = "root"
+database = "hbtn_0e_6_usa"
 
-# Test de connexion
+# Connexion via TCP avec 127.0.0.1 et port 3306
+engine = create_engine(
+    f"mysql+mysqldb://{username}:{password}@127.0.0.1:3306/{database}",
+    pool_pre_ping=True
+)
+
 try:
-    engine = create_engine(
-        f"mysql+mysqldb://{username}:{password}@127.0.0.1:3307/{database}",
-        pool_pre_ping=True
-    )
-    connection = engine.connect()
-    print("Connexion réussie à MySQL!")
-    connection.close()
+    with engine.connect() as connection:
+        print("✅ Connexion réussie à MySQL !")
 except Exception as e:
-    print(f"Erreur de connexion: {e}")
+    print(f"❌ Erreur de connexion : {e}")
