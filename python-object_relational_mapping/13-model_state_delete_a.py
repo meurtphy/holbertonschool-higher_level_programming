@@ -20,7 +20,9 @@ if __name__ == "__main__":
     session = Session()
 
     # Sélection des états contenant la lettre "a"
-    states_to_delete = session.query(State).filter(State.name.like('%a%')).all()
+    states_to_delete = session.query(State).filter(
+        State.name.like('%a%')
+    ).all()
 
     # Suppression des états sélectionnés
     for state in states_to_delete:
