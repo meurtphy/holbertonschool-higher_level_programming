@@ -19,8 +19,8 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Recherche de l'état par nom
-    state = session.query(State).filter(State.name == sys.argv[4]).first()
+    # Recherche de l'état par nom (insensible à la casse)
+    state = session.query(State).filter(State.name.ilike(sys.argv[4].strip())).first()
 
     # Affichage du résultat
     if state:
