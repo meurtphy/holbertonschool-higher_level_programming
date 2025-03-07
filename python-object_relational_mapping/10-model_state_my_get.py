@@ -20,10 +20,13 @@ if __name__ == "__main__":
     session = Session()
 
     # Recherche de l'état correspondant (SQL Injection Safe)
-    state = session.query(State).filter_by(name=sys.argv[4]).first()
+    state = session.query(State).filter(State.name == sys.argv[4]).first()
 
     # Affichage du résultat EXACTEMENT comme demandé
-    print(state.id if state else "Not found")
+    if state:
+        print(state.id)
+    else:
+        print("Not found")
 
     # Fermeture propre de la session
     session.close()
