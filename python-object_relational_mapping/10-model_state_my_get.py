@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    # Création de l'engine en forçant l'IP 127.0.0.1 pour éviter les erreurs
+    # Création de l'engine en utilisant 127.0.0.1 pour éviter les erreurs de socket
     engine = create_engine(
         "mysql+mysqldb://{}:{}@127.0.0.1:3306/{}".format(
             sys.argv[1], sys.argv[2], sys.argv[3]
@@ -18,12 +18,13 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Recherche du premier état correspondant EXACTEMENT au nom donné
-    state = session.query(State).filter(State.name == sys.argv[4]).first()
+    # Recherche stricte de l'état avec le nom passé en argument
+    state_name = sys.argv[4]
+    state = session.query(State).filter(State.name == state_name).first()
 
-    # Affichage strictement identique à l'exemple attendu
+    # Vérification et affichage strictement identique à l'énoncé
     if state:
-        print(state.id)
+        print("{}".format(state.id))  # Affichage uniquement de l'ID
     else:
         print("Not found")
 
