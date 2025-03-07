@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Script that adds the State object 'Louisiana' to database"""
+"""Script that adds the State object 'Louisiana' to the database"""
 
 import sys
 from model_state import Base, State
@@ -7,27 +7,27 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    # Connexion avec 127.0.0.1 pour éviter les erreurs de socket
+    # Connexion à MySQL en localhost:3306
     engine = create_engine(
-        'mysql+mysqldb://{}:{}@127.0.0.1:3306/{}'.format(
+        'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
             sys.argv[1],
             sys.argv[2],
             sys.argv[3]
         ),
-        pool_pre_ping=True  # évite les erreurs de connexion
+        pool_pre_ping=True
     )
 
+    # Création de la session
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Créer un nouvel objet State pour Louisiana
+    # Ajout d'un nouvel état
     new_state = State(name="Louisiana")
-
-    # Ajouter et commit
     session.add(new_state)
     session.commit()
 
-    # Afficher l'ID du nouvel état
+    # Affichage de l'ID du nouvel état
     print(new_state.id)
 
+    # Fermeture de la session
     session.close()

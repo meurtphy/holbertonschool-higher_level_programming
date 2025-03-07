@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Script that prints the State object with given name"""
+"""Script that prints the State object with a given name from the database"""
 
 import sys
 from model_state import Base, State
@@ -7,9 +7,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    # Connexion avec 127.0.0.1 pour éviter les erreurs de socket
+    # Connexion à MySQL en localhost:3306
     engine = create_engine(
-        'mysql+mysqldb://{}:{}@127.0.0.1:3306/{}'.format(
+        'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
             sys.argv[1],
             sys.argv[2],
             sys.argv[3]
@@ -22,13 +22,10 @@ if __name__ == "__main__":
     session = Session()
 
     # Recherche de l'état par nom
-    state_name = sys.argv[4].strip()
-    state = session.query(State).filter(State.name == state_name).first()
+    state = session.query(State).filter(State.name == sys.argv[4]).first()
 
     # Affichage du résultat
-    if state:
-        print(state.id)
-    else:
-        print("Not found")
+    print(state.id if state else "Not found")
 
+    # Fermeture de la session
     session.close()

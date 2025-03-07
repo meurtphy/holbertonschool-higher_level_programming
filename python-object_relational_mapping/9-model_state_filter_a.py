@@ -7,26 +7,26 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    # Création de l'engine avec 127.0.0.1 pour éviter les erreurs MySQL
+    # Connexion à MySQL en localhost:3306
     engine = create_engine(
-        "mysql+mysqldb://{}:{}@127.0.0.1:3306/{}".format(
-            sys.argv[1], sys.argv[2], sys.argv[3]
+        'mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
+            sys.argv[1],
+            sys.argv[2],
+            sys.argv[3]
         ),
-        pool_pre_ping=True  # Evite les problèmes de connexion
+        pool_pre_ping=True
     )
 
     # Création de la session
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Requête pour filtrer les États contenant la lettre 'a'
-    states = session.query(State).filter(
-        State.name.like("%a%")
-    ).order_by(State.id).all()
+    # Récupération des états contenant 'a'
+    states = session.query(State).filter(State.name.like('%a%')).order_by(State.id).all()
 
-    # Affichage EXACTEMENT comme demandé
+    # Affichage des résultats
     for state in states:
-        print("{}: {}".format(state.id, state.name))
+        print(f"{state.id}: {state.name}")
 
-    # Fermeture propre de la session
+    # Fermeture de la session
     session.close()
