@@ -14,7 +14,7 @@ if __name__ == "__main__":
             sys.argv[2],
             sys.argv[3]
         ),
-        pool_pre_ping=True  # Évite les erreurs de connexion
+        pool_pre_ping=True  # évite les erreurs de connexion
     )
 
     Session = sessionmaker(bind=engine)
