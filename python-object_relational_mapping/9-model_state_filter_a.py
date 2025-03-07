@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    # Création du moteur avec 127.0.0.1 au lieu de localhost
+    # Connexion à MySQL avec 127.0.0.1 pour éviter les problèmes de socket
     engine = create_engine("mysql+mysqldb://{}:{}@127.0.0.1:3306/{}".format(
         sys.argv[1], sys.argv[2], sys.argv[3]), pool_pre_ping=True
     )
@@ -15,12 +15,12 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Récupération des états contenant la lettre 'a' triés par id croissant
+    # Requête des États contenant 'a', triés par ID croissant
     states = session.query(State).filter(State.name.like('%a%')).order_by(State.id).all()
 
     # Affichage des résultats
     for state in states:
-        print(f"{state.id}: {state.name}")
+        print("{}: {}".format(state.id, state.name))
 
-    # Fermeture de la session
+    # Fermeture de la session proprement
     session.close()
