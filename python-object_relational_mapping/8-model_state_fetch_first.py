@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # Récupération du premier état
     first_state = session.query(State).order_by(State.id).first()
 
-    # Affichage du résultat EXACTEMENT comme demandé
+    # Affichage du résultat exactement comme demandé
     if first_state:
         print("{}: {}".format(first_state.id, first_state.name))
     else:
