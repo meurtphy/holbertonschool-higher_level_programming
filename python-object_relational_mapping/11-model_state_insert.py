@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Lists all State objects that contain the letter 'a' from the database hbtn_0e_6_usa.
+Adds the State object “Louisiana” to the database hbtn_0e_6_usa.
 """
 import sys
 from sqlalchemy import create_engine
@@ -18,9 +18,10 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    states_with_a = session.query(State).filter(State.name.ilike('%a%')).order_by(State.id).all()
+    new_state = State(name="Louisiana")
+    session.add(new_state)
+    session.commit()
 
-    for state in states_with_a:
-        print(f"{state.id}: {state.name}")
+    print(new_state.id)
 
     session.close()
