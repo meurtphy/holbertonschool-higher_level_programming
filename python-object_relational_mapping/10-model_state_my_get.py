@@ -7,22 +7,22 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    # Création de l'engine avec 127.0.0.1 pour éviter les erreurs de connexion
+    # Création de l'engine avec 127.0.0.1 au lieu de localhost
     engine = create_engine(
         "mysql+mysqldb://{}:{}@127.0.0.1:3306/{}".format(
             sys.argv[1], sys.argv[2], sys.argv[3]
         ),
-        pool_pre_ping=True  # Vérifie la connexion avant exécution
+        pool_pre_ping=True  # Vérification de la connexion avant exécution
     )
 
     # Création de la session
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Recherche de l'état correspondant (SQL Injection Safe)
+    # Récupération de l'état avec un filtre SQL Injection Safe
     state = session.query(State).filter(State.name == sys.argv[4]).first()
 
-    # Affichage du résultat EXACTEMENT comme demandé
+    # Affichage du résultat exactement comme demandé
     if state:
         print(state.id)
     else:
