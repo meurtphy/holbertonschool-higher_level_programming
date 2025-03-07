@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 if __name__ == "__main__":
-    # Connexion à MySQL (127.0.0.1 pour éviter les erreurs)
+    # Connexion MySQL avec 127.0.0.1
     engine = create_engine(
         'mysql+mysqldb://{}:{}@127.0.0.1:3306/{}'.format(
             sys.argv[1], sys.argv[2], sys.argv[3]
@@ -18,10 +18,10 @@ if __name__ == "__main__":
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Recherche SQLAlchemy (exact match, sensible à la casse)
-    state = session.query(State).filter(State.name == sys.argv[4]).first()
+    # Recherche SQLAlchemy avec un filtre insensible à la casse
+    state = session.query(State).filter_by(name=sys.argv[4]).first()
 
-    # Affichage du résultat
+    # Affichage
     print(state.id if state else "Not found")
 
     session.close()
