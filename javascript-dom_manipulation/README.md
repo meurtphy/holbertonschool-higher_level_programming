@@ -1,0 +1,1 @@
+dom its important part of js learn is absoltut solution
